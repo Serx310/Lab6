@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +34,24 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        email = view.findViewById(R.id.register_email);
-        password = view.findViewById(R.id.register_password);
+        email = view.findViewById(R.id.login_email);
+        password = view.findViewById(R.id.login_password);
         view.findViewById(R.id.btnLogin).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnLogin:
+                navController.navigate(R.id.action_loginFragment_to_userFragment);
+                break;
+            case R.id.not_registered:
+                navController.navigate(R.id.action_loginFragment_to_registerFragment);
+                break;
+        }
+    }
 
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }
