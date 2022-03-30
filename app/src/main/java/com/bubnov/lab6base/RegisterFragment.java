@@ -63,6 +63,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 Bundle args = new Bundle();
                 //args.putString("recipient", String.valueOf(etRecipient.getText()));
             }
+        }else{
+            navController.navigate(R.id.action_registerFragment_to_userFragment);
         }
     }
 
