@@ -5,15 +5,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -22,13 +25,40 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "ARGS:";
     NavController navController;
     TextInputEditText name, surname, email, password, confirm_password;
+    private LoginRegisterModel loginRegisterModel;
+    private UserViewModel userViewModel;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginRegisterModel = new ViewModelProvider(this).get(LoginRegisterModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
+            if(firebaseUser != null){
+                Toast.makeText(getContext(), "User logged in", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        userViewModel.getLoggedOutMutableLiveData().observe(this, loggedOut ->{
+            if(loggedOut){
+                if(getView() != null) Navigation.findNavController(getView()).navigate(R.id.action_registerFragment_to_userFragment);
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.not_registered){
+            if(TextUtils.isEmpty(name.getText().toString().length() < 6 || ));
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false);
+
     }
 
     @Override

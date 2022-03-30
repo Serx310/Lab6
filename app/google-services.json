@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1056149485966",
+    "project_id": "lab6base",
+    "storage_bucket": "lab6base.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056149485966:android:caa27989523e9ebc6b0cdf",
+        "android_client_info": {
+          "package_name": "com.bubnov.lab6base"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056149485966-nf3mntefjbevesid4tdvv8tg0qc15r7j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_Rcg5JL3KID062f9e2KS9O6K6Xxf49PE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056149485966-nf3mntefjbevesid4tdvv8tg0qc15r7j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

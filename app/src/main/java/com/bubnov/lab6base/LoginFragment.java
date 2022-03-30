@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -20,8 +21,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "ARGS:";
     NavController navController;
     TextInputEditText email, password;
+    private LoginRegisterModel loginRegisterModel;
 
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginRegisterModel = new ViewModelProvider(this).get(LoginRegisterModel.class);
+        loginRegisterModel.getUserMutableLiveData().observe(this, firebaseUser -> {
+            if(firebaseUser != null){
+                if(getView() != null) Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_userFragment);
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
