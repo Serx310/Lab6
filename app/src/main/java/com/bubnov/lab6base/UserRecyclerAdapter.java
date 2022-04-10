@@ -8,44 +8,50 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.bubnov.lab6base.model.User;
 
 import java.util.ArrayList;
 
-public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.UserViewHolder> {
-
+//custom adapter class for recyclerview
+public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.UserViewHolder>{
     ArrayList<User> userArrayList;
+
+    public UserRecyclerAdapter() {
+        this.userArrayList = new ArrayList<>();
+    }
 
     @NonNull
     @Override
-     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_user, parent, false);
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_user,parent,false);
         return new UserViewHolder(view);
     }
-
     @Override
-    public void onBindViewHolder(@NonNull UserRecyclerAdapter.UserViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userArrayList.get(position);
-        holder.name.setText(user.getFirstname());
+        holder.firstName.setText(user.getFirstname());
+        holder.lastName.setText(user.getLastname());
         holder.email.setText(user.getEmail());
-        holder.surname.setText(user.getSurname());
     }
-
     @Override
     public int getItemCount() {
         return userArrayList.size();
     }
 
+    public void updateUserList(final ArrayList<User> userArrayList){
+        this.userArrayList = userArrayList;
+        notifyDataSetChanged();
+    }
 
-    static class UserViewHolder extends RecyclerView.ViewHolder {
-        private final TextInputEditText name;
-        private final TextInputEditText surname;
+    static class UserViewHolder extends RecyclerView.ViewHolder{
+        private final TextInputEditText firstName;
+        private final TextInputEditText lastName;
         private final TextInputEditText email;
-
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.edit_name);
-            surname = itemView.findViewById(R.id.edit_surname);
-            email = itemView.findViewById(R.id.edit_email);
+            firstName = itemView.findViewById(R.id.userFirstName);
+            lastName = itemView.findViewById(R.id.userLastName);
+            email = itemView.findViewById(R.id.userEmailAddress);
         }
     }
 }

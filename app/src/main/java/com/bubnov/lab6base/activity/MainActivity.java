@@ -1,8 +1,10 @@
-package com.bubnov.lab6base;
+package com.bubnov.lab6base.activity;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.bubnov.lab6base.R;
 
 public class MainActivity extends AppCompatActivity {
 
