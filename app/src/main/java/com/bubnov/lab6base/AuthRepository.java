@@ -72,6 +72,22 @@ public class AuthRepository {
                     }
                 });
     }
+    
+    public void emailVerification(){
+    
+        FirebaseUser user = auth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
+    
+    }
 
     //method for user logout
     public void logOut(){
