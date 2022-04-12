@@ -4,8 +4,11 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -22,6 +25,7 @@ public class AuthRepository {
     private static final String TAG = "Firebase:";
     //firebase variables
     private final FirebaseAuth firebaseAuth;
+    private Boolean emailVerified = false;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     //mutablelivedata variables
     private final MutableLiveData<FirebaseUser> userMutableLiveData;
@@ -51,6 +55,8 @@ public class AuthRepository {
                 .addOnCompleteListener(application.getMainExecutor(), task->{
                     //if user was created successfully then save data to firebase firestore
                     if (task.isSuccessful()){
+                        sendEmailVerification();
+                        verifyEmailAddress();
                         if (firebaseAuth.getCurrentUser() != null){
                             //gets the newly created users UID
                             String userId = firebaseAuth.getCurrentUser().getUid();
@@ -73,20 +79,35 @@ public class AuthRepository {
                 });
     }
     
-    public void emailVerification(){
-    
-        FirebaseUser user = auth.getCurrentUser();
+    private void verifyEmailAddress(){
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        emailVerified = firebaseUser.isEmailVerified();
+        if(emailVerified){
+            logOut();
+        }else{
+            Toast.makeText(application, "Please verify your email first!", Toast.LENGTH_SHORT).show();
+            firebaseAuth.signOut();
+        }
 
-        user.sendEmailVerification()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "Email sent.");
-                        }
+    }
+
+    private void sendEmailVerification(){
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser != null){
+            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(application, "Registration successful. Please check your inbox for email verification.", Toast.LENGTH_SHORT).show();
+                        logOut();
+                    }else{
+                        Toast.makeText(application, application.getString(R.string.error, task.getException().getMessage())
+                                , Toast.LENGTH_SHORT).show();
+
                     }
-                });
-    
+                }
+            });
+        }
     }
 
     //method for user logout
