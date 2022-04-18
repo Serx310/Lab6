@@ -87,6 +87,8 @@ public class AuthRepository {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         emailVerified = firebaseUser.isEmailVerified();
         if(emailVerified){
+            Toast.makeText(application, "Your user has been verified", Toast.LENGTH_SHORT).show();
+
             logOut();
         }else{
             Toast.makeText(application, "Please verify your email first!", Toast.LENGTH_SHORT).show();
