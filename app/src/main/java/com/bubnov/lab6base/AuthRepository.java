@@ -116,6 +116,20 @@ public class AuthRepository {
         }
     }
 
+    public void sendPasswordResetEmail(String email){
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(application, "Password reset email was successfully sent!", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(application, (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     //method for user logout
     public void logOut(){
         firebaseAuth.signOut();

@@ -18,13 +18,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txtResetPassword = findViewById(R.id.txtResetPassword);
-
-        txtResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ResetPasswordActivity.class));
-            }
-        });
     }
 }

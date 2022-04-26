@@ -1,13 +1,9 @@
 package com.bubnov.lab6base.fragments;
 
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.bubnov.lab6base.activity.ResetPasswordActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.bubnov.lab6base.R;
@@ -54,7 +49,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login,container,false);
 
-        requireActivity().setTitle(getString(R.string.thk));
+        requireActivity().setTitle(getString(R.string.gafpe));
 
         contained = view.findViewById(R.id.login_coordinator);
         userEmail = view.findViewById(R.id.etUserEmailLogin);
@@ -72,6 +67,12 @@ public class LoginFragment extends Fragment {
 
         view.findViewById(R.id.btnRegisterUser).setOnClickListener(view1 -> {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
+        });
+
+        view.findViewById(R.id.txtResetPassword).setOnClickListener(view1 -> {
+            Bundle args = new Bundle();
+            args.putString("Email", String.valueOf(userEmail.getText()));
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_resetPasswordFragment);
         });
 
         return view;
